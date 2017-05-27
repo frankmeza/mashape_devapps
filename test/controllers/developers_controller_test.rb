@@ -72,5 +72,6 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
   test 'DELETE - DELETE /developers/:id' do
     delete "/developers/#{@frank.id}"
     assert_equal status, 204
+    assert_nil Developer.find_by(username: 'frank')
   end
 end

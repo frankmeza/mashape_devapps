@@ -4,12 +4,13 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     @frank = Developer.create(username: 'frank', email: 'fr@nk.io', password: 'mashape')
-    @meza = Developer.create(username: 'meza', email: 'm@za.io', password: 'mashape')
-
-    @frank_new_app = Application.new(developer_id: @frank.id)
     @frank_app1 = Application.create(name: "Fun Stuff", key: 'fun_app', description: 'a good one', developer_id: @frank.id)
     @frank_app2 = Application.create(name: "Fun Stuff", key: 'other_fun_app', description: 'a good one', developer_id: @frank.id)
+
+    @meza = Developer.create(username: 'meza', email: 'm@za.io', password: 'mashape')
     @meza_app1 = Application.create(name: "Such Fun Stuff", key: 'such_fun_app', description: 'a good one', developer_id: @meza.id)
+
+    @frank_new_app = Application.new(developer_id: @frank.id)
   end
 
   def teardown
@@ -68,7 +69,7 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal status, 204
   end
 
-  test 'UPDATE ERROR - PUT /developers/:id' do
+  test 'UPDATE ERROR - PUT /developers/:developer_id/applications/:application_id' do
     no_name = { name: ''}
     put "/developers/#{@frank.id}/applications/#{@frank_app1.id}", { application: no_name }
     assert_equal status, 422
@@ -76,4 +77,11 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
     json['errors']['name'].include? "can't be blank"
   end
 
+  test 'DELETE - DELETE /developers/:developer_id/applications/:application_id' do
+    assert_equal @frank.applications.length, 2
+
+    delete "/developers/#{@frank.id}/applications/#{@frank_app1.id}"
+    assert_equal status, 204
+    assert_nil Application.find_by id: @frank_app1.id
+  end
 end
