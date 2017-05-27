@@ -18,4 +18,11 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
     json['developers'].include? @frank.as_json
     json['developers'].include? @meza.as_json
   end
+
+  test 'SHOW - GET /developers/:id' do
+    get "/developers/#{@frank.id}"
+    assert response.ok?
+    json = JSON.parse body
+    assert_equal json['developer'], @frank.as_json
+  end
 end
