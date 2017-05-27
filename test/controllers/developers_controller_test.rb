@@ -68,4 +68,9 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
     json = JSON.parse body
     json['errors']['username'].include? "can't be blank"
   end
+
+  test 'DELETE - DELETE /developers/:id' do
+    delete "/developers/#{@frank.id}"
+    assert_equal status, 204
+  end
 end

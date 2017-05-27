@@ -1,6 +1,6 @@
 class DevelopersController < ApplicationController
 
-  before_action :get_developer_by_id, only: [:show, :edit, :update]
+  before_action :get_developer_by_id, only: [:show, :edit, :update, :destroy]
 
   def index
     @developers = Developer.all
@@ -35,6 +35,11 @@ class DevelopersController < ApplicationController
     else
       render json: { errors: @developer.errors }, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @developer.destroy
+    head :no_content
   end
 
 
