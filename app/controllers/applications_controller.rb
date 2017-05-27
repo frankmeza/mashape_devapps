@@ -1,7 +1,7 @@
 class ApplicationsController < ApplicationController
 
   before_action :get_developer_by_developer_id
-  before_action :get_application_by_id, only: [:show]
+  before_action :get_application_by_id, only: [:show, :edit]
 
   def index
     render json: { applications: @developer.applications, developer: @developer }
@@ -13,6 +13,10 @@ class ApplicationsController < ApplicationController
 
   def new
     @application = Application.new(developer_id: @developer.id)
+    render json: { application: @application }
+  end
+
+  def edit
     render json: { application: @application }
   end
 

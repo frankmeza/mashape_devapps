@@ -40,4 +40,11 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
     json = JSON.parse body
     assert_equal json['application'], @frank_new_app.as_json
   end
+
+  test 'EDIT - GET /developers/:developer_id/applications/:application_id' do
+    get "/developers/#{@frank.id}/applications/#{@frank_app1.id}/edit"
+    assert_equal status, 200
+    json = JSON.parse body
+    assert_equal json['application'], @frank_app1.as_json
+  end
 end
