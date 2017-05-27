@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170527023938) do
+ActiveRecord::Schema.define(version: 20170527194643) do
+
+  create_table "applications", force: :cascade do |t|
+    t.string  "name"
+    t.string  "key"
+    t.string  "description"
+    t.integer "developer_id"
+    t.index ["developer_id"], name: "index_applications_on_developer_id"
+  end
 
   create_table "developers", force: :cascade do |t|
     t.string "username"
