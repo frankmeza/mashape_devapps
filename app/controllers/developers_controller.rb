@@ -20,11 +20,25 @@ class DevelopersController < ApplicationController
     render json: { developer: @developer }
   end
 
+  def create
+    @developer = Developer.new developer_params
+    binding.pry
+    if @developer.save
+      head :no_content
+    else
+      render json: { errors: @developer.errors }, status: 422
+    end
+  end
+
 
   private
 
 
   def get_developer_by_id
     @developer = Developer.find params[:id]
+  end
+
+  def developer_params
+    params.require(:developer).permit(:username, :email, :password)
   end
 end

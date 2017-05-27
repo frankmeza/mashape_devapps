@@ -40,4 +40,16 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
     json = JSON.parse body
     assert_equal json['developer'], @frank.as_json
   end
+
+  test 'CREATE SUCCESS - POST /developers' do
+    dev = { username: 'dev', email: 'dev@email.com', password: 'devdevdev' }
+    post '/developers', { developer: dev_without_email }
+    assert response.success?
+  end
+
+  test 'CREATE ERROR - POST /developers' do
+    dev_without_email = { username: 'dev', password: 'devdevdev' }
+    post '/developers', { developer: dev_without_email }
+    assert_equal status, 422
+  end
 end
