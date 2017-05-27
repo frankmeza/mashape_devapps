@@ -4,8 +4,8 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     @new_dev = Developer.new()
-    @frank = Developer.create username: 'frank', email: 'fr@nk.io', password: 'mashape'
-    @meza = Developer.create username: 'meza', email: 'm@za.io', password: 'mashape'
+    @frank = Developer.create(username: 'frank', email: 'fr@nk.io', password: 'mashape')
+    @meza = Developer.create(username: 'meza', email: 'm@za.io', password: 'mashape')
   end
 
   def teardown

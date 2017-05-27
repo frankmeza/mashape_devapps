@@ -3,7 +3,7 @@ require 'test_helper'
 class ApplicationTest < ActiveSupport::TestCase
   setup do
     @frank = Developer.create(username: 'frank', email: 'fr@nk.io', password: 'mashape')
-    @application = Application.new( name: "Fun Stuff", key: 'fun_app', description: 'a good one', developer_id: @frank.id)
+    @application = Application.new(name: "Fun Stuff", key: 'fun_app', description: 'a good one', developer_id: @frank.id)
   end
 
   teardown do
