@@ -51,5 +51,7 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
     dev_without_email = { username: 'dev', password: 'devdevdev' }
     post '/developers', { developer: dev_without_email }
     assert_equal status, 422
+    json = JSON.parse body
+    json['errors']['email'].include? "can't be blank"
   end
 end
