@@ -47,4 +47,18 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
     json = JSON.parse body
     assert_equal json['application'], @frank_app1.as_json
   end
+
+  test 'CREATE SUCCESS - POST /developers/:developer_id/applications' do
+    valid_app = { name: 'valid', key: 'also_valid', description: 'test', developer_id: @frank.id }
+    post "/developers/#{@frank.id}/applications", { application: valid_app }
+    assert_equal status, 201
+  end
+
+  test 'CREATE ERROR - POST /developers/:developer_id/applications' do
+    invalid_app = { name: 'valid', key: 'also_valid', developer_id: @frank.id }
+    post "/developers/#{@frank.id}/applications", { application: invalid_app }
+    assert_equal status, 422
+    json = JSON.parse body
+    json['errors']['description'].include? "can't be blank"
+  end
 end
