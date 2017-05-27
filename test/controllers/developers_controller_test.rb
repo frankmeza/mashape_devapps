@@ -54,4 +54,18 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
     json = JSON.parse body
     json['errors']['email'].include? "can't be blank"
   end
+
+  test 'UPDATE SUCCESS - PUT /developers/:id' do
+    new_name = { username: 'Frankyboy'}
+    put "/developers/#{@frank.id}", { developer: new_name }
+    assert_equal status, 204
+  end
+
+  test 'UPDATE ERROR - PUT /developers/:id' do
+    no_name = { username: ''}
+    put "/developers/#{@frank.id}", { developer: no_name }
+    assert_equal status, 422
+    json = JSON.parse body
+    json['errors']['username'].include? "can't be blank"
+  end
 end

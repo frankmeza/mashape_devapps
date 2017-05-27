@@ -1,6 +1,6 @@
 class DevelopersController < ApplicationController
 
-  before_action :get_developer_by_id, only: [:show, :edit]
+  before_action :get_developer_by_id, only: [:show, :edit, :update]
 
   def index
     @developers = Developer.all
@@ -24,6 +24,14 @@ class DevelopersController < ApplicationController
     @developer = Developer.new developer_params
     if @developer.save
       head :created
+    else
+      render json: { errors: @developer.errors }, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @developer.update developer_params
+      head :no_content
     else
       render json: { errors: @developer.errors }, status: :unprocessable_entity
     end
