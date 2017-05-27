@@ -11,6 +11,11 @@ class ApplicationsController < ApplicationController
     render json: { application: @application }
   end
 
+  def new
+    @application = Application.new(developer_id: @developer.id)
+    render json: { application: @application }
+  end
+
 
   private
 
