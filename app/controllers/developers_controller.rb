@@ -22,11 +22,10 @@ class DevelopersController < ApplicationController
 
   def create
     @developer = Developer.new developer_params
-    binding.pry
     if @developer.save
-      head :no_content
+      head :created
     else
-      render json: { errors: @developer.errors }, status: 422
+      render json: { errors: @developer.errors }, status: :unprocessable_entity
     end
   end
 
