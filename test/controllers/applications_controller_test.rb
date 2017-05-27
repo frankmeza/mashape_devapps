@@ -61,4 +61,19 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
     json = JSON.parse body
     json['errors']['description'].include? "can't be blank"
   end
+
+  test 'UPDATE SUCCESS - PUT /developers/:developer_id/applications/:application_id' do
+    new_name = { name: 'New Name'}
+    put "/developers/#{@frank.id}/applications/#{@frank_app1.id}", { application: new_name }
+    assert_equal status, 204
+  end
+
+  test 'UPDATE ERROR - PUT /developers/:id' do
+    no_name = { name: ''}
+    put "/developers/#{@frank.id}/applications/#{@frank_app1.id}", { application: no_name }
+    assert_equal status, 422
+    json = JSON.parse body
+    json['errors']['name'].include? "can't be blank"
+  end
+
 end

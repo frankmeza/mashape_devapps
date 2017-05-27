@@ -1,7 +1,7 @@
 class ApplicationsController < ApplicationController
 
   before_action :get_developer_by_developer_id
-  before_action :get_application_by_id, only: [:show, :edit]
+  before_action :get_application_by_id, only: [:show, :edit, :update]
 
   def index
     render json: { applications: @developer.applications, developer: @developer }
@@ -24,6 +24,14 @@ class ApplicationsController < ApplicationController
     @application = Application.new application_params
     if @application.save
       head :created
+    else
+      render json: { errors: @application.errors }, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @application.update application_params
+      head :no_content
     else
       render json: { errors: @application.errors }, status: :unprocessable_entity
     end
