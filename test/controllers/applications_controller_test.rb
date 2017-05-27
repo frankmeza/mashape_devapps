@@ -23,4 +23,11 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
     json['applications'].include? @frank_app1.as_json
     json['applications'].include? @frank_app2.as_json
   end
+
+  test 'SHOW - GET /developers/:developer_id/applications/:application_id' do
+    get "/developers/#{@frank.id}/applications/#{@frank_app1.id}"
+    assert_equal status, 200
+    json = JSON.parse body
+    assert_equal json['application'], @frank_app1.as_json
+  end
 end
