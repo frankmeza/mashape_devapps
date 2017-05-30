@@ -17,7 +17,7 @@ class AuthorizeApiRequest
 
   def admin
     @admin ||= Admin.find(decoded_auth_token[:admin_id]) if decoded_auth_token
-    @admin ||= errors.add(:token, 'Invalid creds') && nil
+    @admin ||= errors.add(:token, 'Sorry, that auth token is incorrect.') && nil
   end
 
   def decoded_auth_token
@@ -28,7 +28,7 @@ class AuthorizeApiRequest
     if headers['Authorization'].present?
       return headers['Authorization'].split(' ').last
     else
-      errors.add(:token, 'missing creds')
+      errors.add(:token, 'Sorry, the auth token is missing.')
     end
     nil
   end

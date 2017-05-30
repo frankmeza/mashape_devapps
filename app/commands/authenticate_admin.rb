@@ -20,6 +20,6 @@ class AuthenticateAdmin
     admin = Admin.find_by(email: email)
     return admin if admin && admin.authenticate(password)
 
-    errors.add(:admin_authentication, 'nope, invalid creds')
+    errors.add(:admin_authentication, 'Sorry, those credentials are not valid.')
   end
 end
