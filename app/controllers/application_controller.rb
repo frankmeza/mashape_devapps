@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_filter :authenticate_request
+  before_action :authenticate_request
 
   attr_reader :current_admin
 

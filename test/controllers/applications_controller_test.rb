@@ -9,9 +9,7 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def after_setup
-    post '/authenticate', { "email": @admin.email, "password": @admin.password }
-    response = JSON.parse body
-    @admin_headers = { "Authorization": response["auth_token"] }
+    @admin_headers = include_admin_auth_token
   end
 
   def teardown
