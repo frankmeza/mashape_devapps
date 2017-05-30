@@ -12,6 +12,7 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
   end
 
   def teardown
+    destroy_all Application
     destroy_all Developer
     destroy_all Admin
   end

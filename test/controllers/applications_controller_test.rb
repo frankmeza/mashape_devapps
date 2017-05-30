@@ -13,8 +13,9 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def teardown
-    destroy_all Developer
     destroy_all Application
+    destroy_all Developer
+    destroy_all Admin
   end
 
   test 'INDEX - GET /developers/:developer_id/applications' do
