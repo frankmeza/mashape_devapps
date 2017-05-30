@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ApplicationsControllerTest < ActionDispatch::IntegrationTest
-
   def setup
     @frank = Developer.create(username: 'frank', email: 'fr@nk.io', password: 'mashape')
     @frank_app1 = Application.create(name: "Fun Stuff", key: 'fun_app', description: 'a good one', developer_id: @frank.id)
