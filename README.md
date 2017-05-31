@@ -92,7 +92,8 @@ Create a second Developer the same way:
 }
 ```
 
-## GET `localhost:3000/developers` for the index, and you will see them both:
+## GET `localhost:3000/developers`
+...for the index, and you will see them both:
 ```
 {
   "developers": [
@@ -149,7 +150,7 @@ Create a second Developer the same way:
 ```
 
 ## DELETE `localhost:3000/developers/1`
-... and poof! Developer 1 1/2 is no longer in our database.
+...and poof! Developer 1 1/2 is no longer in our database.
 
 # Applications
 
