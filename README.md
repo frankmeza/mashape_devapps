@@ -4,7 +4,6 @@
 
 It was built using Rails 5.0.3, Ruby 2.3.0p0, runs on the stock SQLite3 database and is thoroughly tested with Minitest.
 
-An `Admin` can perform CRUD operations on, and manage both Developers and their Applications. They must first be created in the Rails Console, as there is no API meant for creating Admins.
 
 ## Configuration
 
@@ -34,6 +33,8 @@ rails s
 The tests can be run with the very simple `rake` command.
 
 ## How to Use the API
+
+First, an `Admin` can perform CRUD operations on, and manage both Developers and their Applications. They must first be created in the Rails Console, as there is no API meant for creating Admins.
 ```
 $ rails console
 ```
