@@ -14,7 +14,7 @@ class ActiveSupport::TestCase
   end
 
   def include_admin_auth_token
-    admin = Admin.create(email: 'testadmin@yourapp.com', password: 'cloak_and_dagger')
+    admin = create(:admin)
     post '/authenticate', params: { "email": admin.email, "password": admin.password }
     response = JSON.parse body
     { "Authorization": response["auth_token"] }
