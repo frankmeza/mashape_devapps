@@ -2,13 +2,12 @@ require 'test_helper'
 
 class ApplicationTest < ActiveSupport::TestCase
   setup do
-    @frank = Developer.create(username: 'frank', email: 'fr@nk2.io', password: 'mashape')
-    @application = Application.new(name: "Fun Stuff", key: 'fun_app', description: 'a good one', developer_id: @frank.id)
+    @application = create(:application)
   end
 
   teardown do
-    @frank.destroy
-    @application.destroy
+    destroy_all Application
+    destroy_all Developer
   end
 
   test 'a valid Application has a name, key, description, and developer_id' do

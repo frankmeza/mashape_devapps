@@ -3,9 +3,8 @@ require 'test_helper'
 class ApplicationsControllerTest < ActionDispatch::IntegrationTest
 
   def setup
-    @frank = Developer.create(username: 'frank', email: 'fr@nk.io', password: 'mashape')
-    @frank_app1 = Application.create(name: "Fun Stuff", key: 'fun_app', description: 'a good one', developer_id: @frank.id)
-    @admin = Admin.create!(email: 'testadmin@yourapp.com', password: 'cloak_and_dagger')
+    @frank = create(:developer)
+    @frank_app1 = create(:application, developer: @frank)
   end
 
   def after_setup
@@ -19,9 +18,9 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'INDEX - GET /developers/:developer_id/applications' do
-    frank_app2 = Application.create(name: "Fun Stuff", key: 'other_fun_app', description: 'a good one', developer_id: @frank.id)
-    meza = Developer.create(username: 'meza', email: 'm@za.io', password: 'mashape')
-    meza_app1 = Application.create(name: "Such Fun Stuff", key: 'such_fun_app', description: 'a good one', developer_id: meza.id)
+    frank_app2 = create(:application, developer: @frank)
+    meza = create(:developer)
+    meza_app1 = create(:application, developer: meza)
 
     get "/developers/#{@frank.id}/applications",
       headers: @admin_headers
@@ -60,17 +59,17 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'CREATE SUCCESS - POST /developers/:developer_id/applications' do
-    valid_app = { name: 'valid', key: 'also_valid', description: 'test', developer_id: @frank.id }
+    valid_app = build(:application, developer: @frank)
     post "/developers/#{@frank.id}/applications",
-      params: { application: valid_app },
+      params: { application: valid_app.attributes },
       headers: @admin_headers
     assert_equal 201, status
   end
 
   test 'CREATE ERROR - POST /developers/:developer_id/applications' do
-    invalid_app = { name: 'valid', key: 'also_valid', developer_id: @frank.id }
+    invalid_app = build(:application, developer: @frank, description: nil)
     post "/developers/#{@frank.id}/applications",
-      params: { application: invalid_app },
+      params: { application: invalid_app.attributes },
       headers: @admin_headers
     assert_equal 422, status
     json = JSON.parse body

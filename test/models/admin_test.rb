@@ -2,7 +2,7 @@ require 'test_helper'
 
 class AdminTest < ActiveSupport::TestCase
   setup do
-    @frank = Admin.new(email: 'adminfr@nk.io', password: 'mashape')
+    @frank = create(:admin)
   end
 
   teardown do
