@@ -11,15 +11,6 @@ class DevelopersController < ApplicationController
     render json: { developer: @developer }
   end
 
-  def new
-    @developer = Developer.new()
-    render json: { developer: @developer }
-  end
-
-  def edit
-    render json: { developer: @developer }
-  end
-
   def create
     @developer = Developer.new developer_params
     if @developer.save

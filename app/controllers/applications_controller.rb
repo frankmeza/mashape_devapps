@@ -11,15 +11,6 @@ class ApplicationsController < ApplicationController
     render json: { application: @application }
   end
 
-  def new
-    @application = Application.new(developer_id: @developer.id)
-    render json: { application: @application }
-  end
-
-  def edit
-    render json: { application: @application }
-  end
-
   def create
     @application = Application.new application_params
     if @application.save
