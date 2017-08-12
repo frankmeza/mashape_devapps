@@ -41,24 +41,6 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal json['application'], @frank_app1.as_json
   end
 
-  test 'NEW - GET /developers/:developer_id/applications/new' do
-    frank_new_app = Application.new(developer_id: @frank.id)
-
-    get "/developers/#{@frank.id}/applications/new",
-      headers: @admin_headers
-    assert_equal 200, status
-    json = JSON.parse body
-    assert_equal json['application'], frank_new_app.as_json
-  end
-
-  test 'EDIT - GET /developers/:developer_id/applications/:application_id' do
-    get "/developers/#{@frank.id}/applications/#{@frank_app1.id}/edit",
-      headers: @admin_headers
-    assert_equal 200, status
-    json = JSON.parse body
-    assert_equal json['application'], @frank_app1.as_json
-  end
-
   test 'CREATE SUCCESS - POST /developers/:developer_id/applications' do
     valid_app = { name: 'valid', key: 'also_valid', description: 'test', developer_id: @frank.id }
     post "/developers/#{@frank.id}/applications",

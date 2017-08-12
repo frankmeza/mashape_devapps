@@ -36,24 +36,6 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
     assert_equal json['developer'], @frank.as_json
   end
 
-  test 'NEW - GET /developers/new' do
-    new_dev = Developer.new()
-
-    get '/developers/new',
-      headers: @admin_headers
-    assert_equal 200, status
-    json = JSON.parse body
-    assert_equal json['developer'], new_dev.as_json
-  end
-
-  test 'EDIT - GET /developers/:id/edit' do
-    get "/developers/#{@frank.id}/edit",
-      headers: @admin_headers
-    assert_equal 200, status
-    json = JSON.parse body
-    assert_equal json['developer'], @frank.as_json
-  end
-
   test 'CREATE SUCCESS - POST /developers' do
     valid_dev = { username: 'dev', email: 'dev@email.com', password: 'devdevdev' }
 
