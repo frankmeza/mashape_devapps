@@ -3,12 +3,11 @@ class DevelopersController < ApplicationController
   before_action :get_developer_by_id, only: [:show, :edit, :update, :destroy]
 
   def index
-    @developers = Developer.all
-    render json: { developers: @developers }
+    render json: Developer.all, each_serializer: DeveloperSerializer
   end
 
   def show
-    render json: { developer: @developer }
+    render json: @developer, serializer: DeveloperSerializer
   end
 
   def create

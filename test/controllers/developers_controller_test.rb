@@ -24,8 +24,9 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
       headers: @admin_headers
     assert_equal 200, status
     json = JSON.parse body
-    json['developers'].include? @frank.as_json
-    json['developers'].include? meza.as_json
+    json['developers'].any? do |dev|
+      assert dev['email'] == @frank.email || dev['email'] == @meza.email
+    end
   end
 
   test 'SHOW - GET /developers/:id' do
@@ -33,7 +34,7 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
       headers: @admin_headers
     assert_equal 200, status
     json = JSON.parse body
-    assert_equal json['developer'], @frank.as_json
+    assert_equal json['developer']['email'], @frank.email
   end
 
   test 'CREATE SUCCESS - POST /developers' do

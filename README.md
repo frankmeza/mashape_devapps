@@ -100,43 +100,25 @@ Create a second Developer the same way:
     {
       "id": 1,
       "username": "developer 1",
-      "email": "dev1@email.com",
-      "password": "dev1dev1"
+      "email": "dev1@email.com"
     },
     {
       "id": 2,
       "username": "developer 2",
-      "email": "dev2@email.com",
-      "password": "dev2dev2"
+      "email": "dev2@email.com"
     }
   ]
 }
 ```
 
-## GET `localhost:3000/developers/new`
-...for an instantiated but not-yet-valid developer to edit and save.
-```
-{
-  "developer": {
-    "id": null,
-    "username": null,
-    "email": null,
-    "password": null
-  }
-}
-```
-
 ## GET `localhost:3000/developers/1`
-...for the details on just the one. Similarly, you can also hit
-## GET `localhost:3000/developers/1/edit`
-...and you will see the same JSON object.
+...for the details on just the one.
 ```
 {
   "developer": {
     "id": 1,
     "username": "developer 1",
-    "email": "dev1@email.com",
-    "password": "dev1dev1"
+    "email": "dev1@email.com"
   }
 }
 ```
