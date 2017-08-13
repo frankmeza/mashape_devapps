@@ -1,14 +1,14 @@
 class ApplicationsController < ApplicationController
 
-  before_action :get_developer_by_developer_id
+  before_action :get_developer_by_id, only: [:index, :update]
   before_action :get_application_by_id, only: [:show, :edit, :update, :destroy]
 
   def index
-    render json: { applications: @developer.applications, developer: @developer }
+    render json: @developer.applications, meta: { developer: @developer }, each_serializer: ApplicationSerializer
   end
 
   def show
-    render json: { application: @application }
+    render json: @application, serializer: ApplicationSerializer
   end
 
   def create
@@ -21,7 +21,7 @@ class ApplicationsController < ApplicationController
   end
 
   def update
-    if @application.update application_params
+    if @application.update(application_params.merge!(developer_id: @developer.id))
       head :no_content
     else
       render json: { errors: @application.errors }, status: :unprocessable_entity
@@ -37,7 +37,7 @@ class ApplicationsController < ApplicationController
   private
 
 
-  def get_developer_by_developer_id
+  def get_developer_by_id
     @developer = Developer.find params[:developer_id]
   end
 

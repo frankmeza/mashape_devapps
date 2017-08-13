@@ -179,11 +179,12 @@ Applications are tied to Developers and when created, must explicitly be tied to
       "developer_id": 1
     }
   ],
-  "developer": {
-    "id": 1,
-    "username": "developer 1 1/2",
-    "email": "dev1@email.com",
-    "password": "dev1dev1"
+  "meta": {
+    developer": {
+      "id": 1,
+      "username": "developer 1 1/2",
+      "email": "dev1@email.com"
+    }
   }
 }
 ```

@@ -4,7 +4,9 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     @frank = Developer.create(username: 'frank', email: 'fr@nk.io', password: 'mashape')
-    @frank_app1 = Application.create(name: "Fun Stuff", key: 'fun_app', description: 'a good one', developer_id: @frank.id)
+    @frank_app1 = Application.create(name: 'Fun Stuff', key: 'fun_app',
+                                     description: 'a good one', developer_id: @frank.id)
+
     @admin = Admin.create!(email: 'testadmin@yourapp.com', password: 'cloak_and_dagger')
   end
 
@@ -19,18 +21,25 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'INDEX - GET /developers/:developer_id/applications' do
-    frank_app2 = Application.create(name: "Fun Stuff", key: 'other_fun_app', description: 'a good one', developer_id: @frank.id)
+    frank_app2 = Application.create(name: "Fun Stuff", key: 'other_fun_app',
+                                    description: 'a good one', developer_id: @frank.id)
+
     meza = Developer.create(username: 'meza', email: 'm@za.io', password: 'mashape')
-    meza_app1 = Application.create(name: "Such Fun Stuff", key: 'such_fun_app', description: 'a good one', developer_id: meza.id)
+    meza_app1 = Application.create(name: "Such Fun Stuff", key: 'such_fun_app',
+                                   description: 'a good one', developer_id: meza.id)
 
     get "/developers/#{@frank.id}/applications",
       headers: @admin_headers
     assert_equal 200, status
     json = JSON.parse body
-    assert_equal json['developer'], @frank.as_json
-    json['applications'].include? @frank_app1.as_json
-    json['applications'].include? frank_app2.as_json
-    refute json['applications'].include? meza_app1.as_json
+
+    assert_equal json['applications']['meta']['developer'], @frank.email
+    json['applications'].any? do |app|
+      assert app['id'] == @frank_app1.id || app['id'] == frank_app2.id
+    end
+    json['applications'].none? do |app|
+      refute app['id'] == meza_app1.id
+    end
   end
 
   test 'SHOW - GET /developers/:developer_id/applications/:application_id' do
@@ -38,11 +47,13 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
       headers: @admin_headers
     assert_equal 200, status
     json = JSON.parse body
-    assert_equal json['application'], @frank_app1.as_json
+    assert_equal json['application']['developer']['email'], @frank.email
   end
 
   test 'CREATE SUCCESS - POST /developers/:developer_id/applications' do
-    valid_app = { name: 'valid', key: 'also_valid', description: 'test', developer_id: @frank.id }
+    valid_app = { name: 'valid', key: 'also_valid', description: 'test',
+                  developer_id: @frank.id }
+
     post "/developers/#{@frank.id}/applications",
       params: { application: valid_app },
       headers: @admin_headers
