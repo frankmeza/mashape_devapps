@@ -1,6 +1,6 @@
 class ApplicationsController < ApplicationController
 
-  before_action :get_developer_by_id, only: [:index, :update]
+  before_action :get_developer_by_id, only: [:index, :show, :update]
   before_action :get_application_by_id, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -8,7 +8,7 @@ class ApplicationsController < ApplicationController
   end
 
   def show
-    render json: @application, serializer: ApplicationSerializer
+    render json: @application, meta: { developer: @developer }, serializer: ApplicationSerializer
   end
 
   def create

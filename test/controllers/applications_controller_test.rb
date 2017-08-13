@@ -33,13 +33,13 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 200, status
     json = JSON.parse body
 
-    assert_equal json['applications']['meta']['developer'], @frank.email
     json['applications'].any? do |app|
       assert app['id'] == @frank_app1.id || app['id'] == frank_app2.id
     end
     json['applications'].none? do |app|
       refute app['id'] == meza_app1.id
     end
+    assert_equal json['meta']['developer']['email'], @frank.email
   end
 
   test 'SHOW - GET /developers/:developer_id/applications/:application_id' do
@@ -47,7 +47,7 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
       headers: @admin_headers
     assert_equal 200, status
     json = JSON.parse body
-    assert_equal json['application']['developer']['email'], @frank.email
+    assert_equal json['meta']['developer']['email'], @frank.email
   end
 
   test 'CREATE SUCCESS - POST /developers/:developer_id/applications' do
