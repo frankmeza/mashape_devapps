@@ -3,8 +3,7 @@ require 'test_helper'
 class DevelopersControllerTest < ActionDispatch::IntegrationTest
 
   def setup
-    @frank = Developer.create(username: 'frank', email: 'fr@nk.io', password: 'mashape')
-    @admin = Admin.create!(email: 'testadmin@yourapp.com', password: 'cloak_and_dagger')
+    @frank = create(:developer)
   end
 
   def after_setup
@@ -18,7 +17,7 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'INDEX - GET /developers' do
-    meza = Developer.create(username: 'meza', email: 'm@za.io', password: 'mashape')
+    meza = create(:developer)
 
     get '/developers',
       headers: @admin_headers
@@ -38,19 +37,19 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'CREATE SUCCESS - POST /developers' do
-    valid_dev = { username: 'dev', email: 'dev@email.com', password: 'devdevdev' }
+    valid_dev = build(:developer)
 
     post '/developers',
-      params: { developer: valid_dev },
+      params: { developer: valid_dev.attributes },
       headers: @admin_headers
     assert_equal 201, status
   end
 
   test 'CREATE ERROR - POST /developers' do
-    dev_without_email = { username: 'dev', password: 'devdevdev' }
+    dev_without_email = build(:developer, email: nil)
 
     post '/developers',
-      params: { developer: dev_without_email },
+      params: { developer: dev_without_email.attributes },
       headers: @admin_headers
     assert_equal 422, status
     json = JSON.parse body

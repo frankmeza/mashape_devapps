@@ -2,11 +2,11 @@ require 'test_helper'
 
 class DeveloperTest < ActiveSupport::TestCase
   setup do
-    @frank = Developer.new(username: 'frank', email: 'fr@nk.io', password: 'mashape')
+    @frank = create(:developer)
   end
 
   teardown do
-    @frank.destroy
+    destroy_all Developer
   end
 
   test 'a valid Developer has a username, email address, and password' do

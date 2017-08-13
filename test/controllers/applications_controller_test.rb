@@ -3,11 +3,16 @@ require 'test_helper'
 class ApplicationsControllerTest < ActionDispatch::IntegrationTest
 
   def setup
+<<<<<<< HEAD
     @frank = Developer.create(username: 'frank', email: 'fr@nk.io', password: 'mashape')
     @frank_app1 = Application.create(name: 'Fun Stuff', key: 'fun_app',
                                      description: 'a good one', developer_id: @frank.id)
 
     @admin = Admin.create!(email: 'testadmin@yourapp.com', password: 'cloak_and_dagger')
+=======
+    @frank = create(:developer)
+    @frank_app1 = create(:application, developer: @frank)
+>>>>>>> 4c268ede71e36c18c691321921b080c39b72b985
   end
 
   def after_setup
@@ -51,19 +56,23 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'CREATE SUCCESS - POST /developers/:developer_id/applications' do
+<<<<<<< HEAD
     valid_app = { name: 'valid', key: 'also_valid', description: 'test',
                   developer_id: @frank.id }
 
+=======
+    valid_app = build(:application, developer: @frank)
+>>>>>>> 4c268ede71e36c18c691321921b080c39b72b985
     post "/developers/#{@frank.id}/applications",
-      params: { application: valid_app },
+      params: { application: valid_app.attributes },
       headers: @admin_headers
     assert_equal 201, status
   end
 
   test 'CREATE ERROR - POST /developers/:developer_id/applications' do
-    invalid_app = { name: 'valid', key: 'also_valid', developer_id: @frank.id }
+    invalid_app = build(:application, developer: @frank, description: nil)
     post "/developers/#{@frank.id}/applications",
-      params: { application: invalid_app },
+      params: { application: invalid_app.attributes },
       headers: @admin_headers
     assert_equal 422, status
     json = JSON.parse body
