@@ -136,7 +136,7 @@ Create a second Developer the same way:
 
 # Applications
 
-Applications are tied to Developers and when created, must explicitly be tied to a Developer id, as the value to `"developer_id"` in the POST request.
+Applications are created within a Developer context and this value is automatically found from the request params.
 
 ## POST `localhost:3000/developers/1/applications`
 ```
